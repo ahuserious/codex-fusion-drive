@@ -1,0 +1,26 @@
+# FUTURE COMPATIBILITY RETEST ONLY — merge into user-level ~/.codex/config.toml
+# temporarily after reviewing existing values. This shape matches Codex 0.145.
+# Keep max_depth = 1 unless recursive delegation is deliberately required;
+# deeper fan-out increases cost, latency, and the chance of uncontrolled task
+# expansion.
+
+[agents]
+max_concurrent_threads_per_session = 4
+max_depth = 1
+job_max_runtime_seconds = 1800
+interrupt_message = true
+
+# A role is registered in the main config. The referenced file is a Codex config
+# layer and must not repeat role metadata such as description or nicknames.
+# Replace this placeholder with the absolute path to the copied agent file.
+[agents.grok45_reviewer]
+description = "Independent reasoning-only Grok 4.5 reviewer. It receives complete evidence from its parent, never calls tools, and never implements changes."
+config_file = "/absolute/path/to/.codex/agents/grok45_reviewer.toml"
+nickname_candidates = ["Axiom", "Kepler", "Turing"]
+
+# IMPORTANT: do not leave this role registered on the tested Codex 0.145 build.
+# A foreground tool-free Grok turn passed, but a real custom-agent spawn failed
+# with HTTP 422 due an unsupported xAI `ModelInput`, and function-result
+# continuation also failed. For future retesting, the hardened layer must disable
+# known tool-producing features. Every inherited MCP server must be repeated with
+# its `command` or `url` plus `enabled = false`; an enabled-only table is invalid.

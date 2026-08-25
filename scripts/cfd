@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+PLUGIN_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/../plugins/codex-fusion-drive" && pwd)
+PYTHONPATH="$PLUGIN_DIR${PYTHONPATH:+:$PYTHONPATH}" exec python3 -m codex_fusion_drive "$@"
+

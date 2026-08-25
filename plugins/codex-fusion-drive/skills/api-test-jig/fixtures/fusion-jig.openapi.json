@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Fusion Drive API jig",
+    "version": "1.0.0",
+    "description": "Local simulated endpoint. Must pass before any live API call. No secrets."
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Jig liveness",
+        "responses": {
+          "200": {
+            "description": "Jig is up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "jig"],
+                  "properties": {
+                    "status": { "type": "string", "enum": ["ok"] },
+                    "jig": { "type": "boolean" }
+                  }
+                },
+                "example": { "status": "ok", "jig": true }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/greet": {
+      "get": {
+        "operationId": "greet",
+        "summary": "Deterministic greeting used as A→B→C seam",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "jig" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Greeting",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                },
+                "example": { "message": "hello, jig" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

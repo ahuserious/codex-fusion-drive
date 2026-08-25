@@ -1,0 +1,69 @@
+{
+  "name": "codex-fusion-drive",
+  "version": "0.2.3",
+  "description": "Maximum-intelligence Codex planning, multi-model fusion, lifecycle gates, rescue, human simulation, and deterministic auto-evaluation.",
+  "author": {
+    "name": "DanBot",
+    "url": "https://github.com/DanRepaci"
+  },
+  "homepage": "https://github.com/DanRepaci/codex-fusion-drive",
+  "repository": "https://github.com/DanRepaci/codex-fusion-drive",
+  "keywords": [
+    "codex",
+    "multi-agent",
+    "multi-model",
+    "fusion",
+    "grok",
+    "fable",
+    "evaluation",
+    "rescue"
+  ],
+  "skills": "./skills/",
+  "exportedSkills": [
+    "codex-fusion-drive",
+    "codex-fusion-drive-config",
+    "codex-fusion-drive-review",
+    "codex-fusion-drive-rescue",
+    "human-sim-users",
+    "auto-eval",
+    "fusion-e2e-unattended",
+    "api-test-jig",
+    "ui-studio",
+    "source-picker",
+    "cursor-cloud-runner",
+    "api-jig-runner",
+    "studio-bank",
+    "fusion-workflow-author"
+  ],
+  "exportedAgents": [
+    "verification-author",
+    "ui-observer",
+    "backend-prober",
+    "stably-runner",
+    "e2e-evidence",
+    "cursor-cloud-runner",
+    "api-jig-runner",
+    "studio-bank"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Codex Fusion Drive",
+    "shortDescription": "Plan with fused frontier models and verify every execution gate",
+    "longDescription": "A Codex-first control plane with separately configurable in-harness and OpenRouter Fusion engines, explicit reasoning normalization, confirmation-backed goal handoff, Grok approval gates, rescue workflows, simulated-user loops, and deterministic HTML/SVG evaluation.",
+    "developerName": "DanBot",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/DanRepaci/codex-fusion-drive",
+    "defaultPrompt": [
+      "Use Codex Fusion Drive to plan this with maximum intelligence",
+      "Show the proposed Fusion Drive workflow and full effective configuration",
+      "Run the Codex Fusion Drive auto-evaluation and produce its deterministic tearsheet"
+    ],
+    "brandColor": "#D6532B",
+    "screenshots": []
+  },
+  "license": "MIT"
+}

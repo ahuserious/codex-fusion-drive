@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fusion Studio bank sidecar</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--studio-color-bg);
+      color: var(--studio-color-fg);
+      font-family: var(--studio-font);
+      font-size: var(--studio-type-base);
+      line-height: 1.45;
+    }
+    :where(p, h1, h2, h3, h4, li, label, button, td, th) { overflow-wrap: anywhere; }
+    :where(img, svg, video) { max-width: 100%; height: auto; }
+    body {
+      background:
+        radial-gradient(1200px 600px at 10% -10%, color-mix(in oklab, var(--studio-color-accent) calc(var(--studio-effect-glow) * 28%), transparent), transparent 55%),
+        var(--studio-color-bg);
+    }
+    .entity-banner {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: flex;
+      gap: var(--studio-space);
+      align-items: center;
+      justify-content: space-between;
+      min-height: var(--studio-nav-height);
+      padding: 0 calc(var(--studio-space) * 2);
+      background: color-mix(in oklab, var(--studio-color-bg-2) 78%, transparent);
+      backdrop-filter: blur(var(--studio-blur));
+      border-bottom: 1px solid color-mix(in oklab, var(--studio-color-fg) 12%, transparent);
+    }
+    .entity-banner strong { letter-spacing: 0.04em; }
+    .chip {
+      font-family: var(--studio-mono);
+      font-size: var(--studio-type-sm);
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in oklab, var(--studio-color-accent-2) 50%, transparent);
+      color: var(--studio-color-accent-2);
+    }
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: calc(var(--studio-space) * 3);
+      padding: calc(var(--studio-space) * 3);
+      padding-bottom: 8rem;
+    }
+    .produced {
+      border-radius: var(--studio-radius);
+      background: color-mix(in oklab, var(--studio-color-bg-2) calc((1 - var(--studio-merge)) * 100%), #f7f1e4);
+      color: color-mix(in oklab, var(--studio-color-fg) calc((1 - var(--studio-merge)) * 100%), #1a1612);
+      box-shadow: var(--studio-shadow);
+      padding: calc(var(--studio-space) * 3);
+      min-width: 0;
+    }
+    .produced h1 { font-size: var(--studio-type-xl); margin: 0 0 var(--studio-space); }
+    .produced p { color: inherit; opacity: 0.86; }
+    .row { display: flex; flex-wrap: wrap; gap: var(--studio-space); margin-top: calc(var(--studio-space) * 2); }
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      border-radius: var(--studio-radius);
+      padding: 10px 16px;
+      font: inherit;
+      background: var(--studio-color-accent);
+      color: #fff8ef;
+      box-shadow: 0 0 calc(24px * var(--studio-effect-glow)) color-mix(in oklab, var(--studio-color-accent) 55%, transparent);
+    }
+    .card {
+      flex: 1 1 220px;
+      min-width: 0;
+      border-radius: var(--studio-radius);
+      padding: calc(var(--studio-space) * 2);
+      background: color-mix(in oklab, var(--studio-color-bg) 35%, transparent);
+      border: 1px solid color-mix(in oklab, var(--studio-color-fg) 14%, transparent);
+    }
+    .drop {
+      min-height: 72px;
+      border: 1px dashed color-mix(in oklab, var(--studio-color-accent-2) 55%, transparent);
+      border-radius: var(--studio-radius);
+      padding: var(--studio-space);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .token {
+      cursor: grab;
+      user-select: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: color-mix(in oklab, var(--studio-color-accent) 22%, var(--studio-color-bg-2));
+      border: 1px solid color-mix(in oklab, var(--studio-color-accent) 45%, transparent);
+      font-family: var(--studio-mono);
+      font-size: var(--studio-type-sm);
+    }
+    #bank {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 20;
+      width: var(--studio-bank-width);
+      max-height: min(78vh, 720px);
+      overflow: auto;
+      border-radius: var(--studio-radius);
+      background: color-mix(in oklab, var(--studio-color-bg-2) 92%, transparent);
+      backdrop-filter: blur(calc(var(--studio-blur) + 6px));
+      box-shadow: var(--studio-shadow);
+      border: 1px solid color-mix(in oklab, var(--studio-color-accent-2) 28%, transparent);
+      padding: calc(var(--studio-space) * 2);
+      transform: translateY(0);
+    }
+    body.bank-collapsed #bank { transform: translateY(calc(100% - 48px)); }
+    #bank header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--studio-space);
+      position: sticky;
+      top: 0;
+      background: inherit;
+      padding-bottom: var(--studio-space);
+    }
+    #bank h2 { margin: 0; font-size: var(--studio-type-lg); }
+    label { display: grid; gap: 4px; margin: 10px 0; font-size: var(--studio-type-sm); color: var(--studio-color-muted); }
+    input[type="range"], input[type="color"] { width: 100%; }
+    .hint { font-family: var(--studio-mono); font-size: 12px; color: var(--studio-color-muted); }
+    kbd {
+      font-family: var(--studio-mono);
+      border: 1px solid color-mix(in oklab, var(--studio-color-fg) 25%, transparent);
+      border-radius: 4px;
+      padding: 0 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="entity-banner">
+    <div>
+      <strong>Produced-site preview</strong>
+      <span class="chip">not the bank</span>
+    </div>
+    <span class="hint">Bank is the bottom-right sidecar · <kbd>Shift</kbd>+<kbd>Tab</kbd></span>
+  </div>
+
+  <main>
+    <section class="produced" id="produced" data-entity="produced-site">
+      <h1>Claimed surface</h1>
+      <p>This pane stands in for the produced site. It consumes CSS variables from <code>tokens.css</code>. It does not own the bank chrome.</p>
+      <div class="row">
+        <article class="card" data-feature="card">
+          <strong>Card</strong>
+          <p>Radius, space, and shadow bind to <code>--studio-*</code>.</p>
+        </article>
+        <article class="card" data-feature="form">
+          <strong>Form</strong>
+          <p>Focus and type scale come from the bank sliders, not hardcoded hex.</p>
+        </article>
+      </div>
+      <div class="row">
+        <button class="btn" type="button" data-feature="button">Accent action</button>
+      </div>
+      <p>Drop harvested types here:</p>
+      <div class="drop" id="applied" data-drop="in">empty — drag tokens in</div>
+    </section>
+  </main>
+
+  <aside id="bank" data-entity="lavish-bank" aria-label="Fusion Studio bank sidecar">
+    <header>
+      <div>
+        <h2>Bank sidecar</h2>
+        <div class="hint">separate entity · lavish-axi HTML · not Figma</div>
+      </div>
+      <button class="btn" type="button" id="toggle">Toggle</button>
+    </header>
+    <p class="hint">Harvest: daisyUI, Linear, Stripe, Vercel, lavish-axi. Open with <code>npx -y lavish-axi .fusion-studio/bank/index.html</code>.</p>
+    <div class="row" id="palette" data-drop="out"></div>
+    <label>Accent <input id="accent" type="color" value="#d6532b" /></label>
+    <label>Background <input id="bg" type="color" value="#14110d" /></label>
+    <label>Type base (px) <input id="type" type="range" min="12" max="22" value="16" /></label>
+    <label>Type ratio <input id="ratio" type="range" min="110" max="150" value="125" /></label>
+    <label>Radius <input id="radius" type="range" min="0" max="28" value="12" /></label>
+    <label>Merge A→B <input id="merge" type="range" min="0" max="100" value="35" /></label>
+    <label>Blur (effects) <input id="blur" type="range" min="0" max="28" value="12" /></label>
+    <label>Glow (effects) <input id="glow" type="range" min="0" max="100" value="40" /></label>
+    <p class="hint">Drag tokens into the produced-site drop, or back here to remove.</p>
+  </aside>
+
+  <script>
+    const root = document.documentElement;
+    const features = ["nav", "card", "button", "form", "type", "slider", "merge", "effect"];
+    const palette = document.getElementById("palette");
+    const applied = document.getElementById("applied");
+    features.forEach((id) => {
+      const el = document.createElement("span");
+      el.className = "token";
+      el.draggable = true;
+      el.dataset.feature = id;
+      el.textContent = id;
+      palette.appendChild(el);
+    });
+    let dragEl = null;
+    document.addEventListener("dragstart", (event) => {
+      if (!(event.target instanceof HTMLElement) || !event.target.classList.contains("token")) return;
+      dragEl = event.target;
+      event.dataTransfer.effectAllowed = "move";
+    });
+    function bindDrop(node) {
+      node.addEventListener("dragover", (event) => event.preventDefault());
+      node.addEventListener("drop", (event) => {
+        event.preventDefault();
+        if (dragEl) node.appendChild(dragEl);
+        if (applied.children.length === 0) applied.textContent = "empty — drag tokens in";
+      });
+    }
+    bindDrop(palette);
+    bindDrop(applied);
+    function setVar(name, value) { root.style.setProperty(name, value); }
+    document.getElementById("accent").addEventListener("input", (e) => setVar("--studio-color-accent", e.target.value));
+    document.getElementById("bg").addEventListener("input", (e) => setVar("--studio-color-bg", e.target.value));
+    document.getElementById("type").addEventListener("input", (e) => setVar("--studio-type-base", e.target.value + "px"));
+    document.getElementById("ratio").addEventListener("input", (e) => setVar("--studio-type-ratio", String(Number(e.target.value) / 100)));
+    document.getElementById("radius").addEventListener("input", (e) => setVar("--studio-radius", e.target.value + "px"));
+    document.getElementById("merge").addEventListener("input", (e) => setVar("--studio-merge", String(Number(e.target.value) / 100)));
+    document.getElementById("blur").addEventListener("input", (e) => setVar("--studio-blur", e.target.value + "px"));
+    document.getElementById("glow").addEventListener("input", (e) => setVar("--studio-effect-glow", String(Number(e.target.value) / 100)));
+    function toggleBank() { document.body.classList.toggle("bank-collapsed"); }
+    document.getElementById("toggle").addEventListener("click", toggleBank);
+    document.addEventListener("keydown", (event) => {
+      if (event.shiftKey && event.key === "Tab") {
+        event.preventDefault();
+        toggleBank();
+      }
+    });
+  </script>
+</body>
+</html>

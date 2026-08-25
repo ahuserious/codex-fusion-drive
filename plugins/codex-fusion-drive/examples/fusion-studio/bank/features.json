@@ -1,0 +1,45 @@
+{
+  "centrifuge": "shared feature types from sites.json + prompt.md — not page clones",
+  "features": [
+    {
+      "id": "nav",
+      "css_variables": ["--studio-nav-height", "--studio-blur", "--studio-color-bg"],
+      "from_sites": ["daisyui navbar", "Linear chrome"]
+    },
+    {
+      "id": "card",
+      "css_variables": ["--studio-radius", "--studio-shadow", "--studio-space"],
+      "from_sites": ["daisyui card", "Linear issue row"]
+    },
+    {
+      "id": "button",
+      "css_variables": ["--studio-color-accent", "--studio-radius", "--studio-type-base"],
+      "from_sites": ["daisyui button", "Stripe CTA"]
+    },
+    {
+      "id": "form",
+      "css_variables": ["--studio-type-base", "--studio-radius", "--studio-color-accent"],
+      "from_sites": ["Stripe docs forms", "daisyui input"]
+    },
+    {
+      "id": "type",
+      "css_variables": ["--studio-type-base", "--studio-type-ratio"],
+      "from_sites": ["Vercel marketing", "Stripe"]
+    },
+    {
+      "id": "slider",
+      "css_variables": ["--studio-merge", "--studio-blur", "--studio-effect-glow"],
+      "from_sites": ["daisyui range"]
+    },
+    {
+      "id": "merge",
+      "css_variables": ["--studio-merge"],
+      "from_sites": ["Vercel light/dark", "two-source token mix"]
+    },
+    {
+      "id": "effect",
+      "css_variables": ["--studio-blur", "--studio-effect-glow", "--studio-shadow"],
+      "from_sites": ["daisyui aura", "daisyui hover-3d", "Vercel glow"]
+    }
+  ]
+}

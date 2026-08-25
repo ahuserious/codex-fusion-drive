@@ -1,0 +1,3 @@
+# Harvest prompt (verbatim class)
+
+UI Studio sidecar: start-dev lists sites + user prompt; centrifuge shared feature types; write artifacts under `.fusion-studio/bank/`. Deploy sidecar as a Lavish editor (`npx -y lavish-axi`) **separate from the produced site** — bottom-right / Shift+Tab bank. Drag elements in/out. Colors, type scale, sliders, merge styles, effects → CSS variables on the page. Bank has access to harvested artifacts; produced site does not own the bank. MVP is skill + folder contract + Lavish HTML bank, not a new Figma. Demo bank HTML under `~/.grok/fusion-drive-upgrade/studio-bank/`.

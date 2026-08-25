@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fusion Drive e2e layer evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claimed_surface", "layers"],
+  "properties": {
+    "claimed_surface": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ui_ux",
+        "sim_users",
+        "stably_cloud",
+        "cursor_cloud",
+        "backend_seam",
+        "verification_gates",
+        "unit_tests",
+        "network_logs",
+        "code_completion_judge"
+      ],
+      "properties": {
+        "ui_ux": {
+          "$ref": "#/$defs/layer"
+        },
+        "sim_users": {
+          "$ref": "#/$defs/layer"
+        },
+        "stably_cloud": {
+          "$ref": "#/$defs/layer"
+        },
+        "cursor_cloud": {
+          "$ref": "#/$defs/layer"
+        },
+        "backend_seam": {
+          "$ref": "#/$defs/layer"
+        },
+        "verification_gates": {
+          "$ref": "#/$defs/layer"
+        },
+        "unit_tests": {
+          "$ref": "#/$defs/layer"
+        },
+        "network_logs": {
+          "$ref": "#/$defs/layer"
+        },
+        "code_completion_judge": {
+          "$ref": "#/$defs/layer",
+          "description": "Optional LLM-as-judge completion CI. Separate from fusion panel-judge."
+        }
+      }
+    },
+    "recordings": {
+      "type": "array"
+    },
+    "observer_notes": {
+      "type": "array"
+    },
+    "system_logs": {
+      "type": "array"
+    },
+    "app_logs": {
+      "type": "array"
+    },
+    "network_logs": {
+      "type": "array"
+    },
+    "unit_tests": {
+      "type": "array"
+    },
+    "abc_claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/abc_claim" }
+    }
+  },
+  "$defs": {
+    "abc_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fire_a", "observe_b", "assert_c"],
+      "properties": {
+        "id": { "type": "string" },
+        "fire_a": { "type": "string", "minLength": 1 },
+        "observe_b": { "type": "string", "minLength": 1 },
+        "assert_c": { "type": "string", "minLength": 1 },
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-fA-F]{64}$" }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "required": ["verdict"],
+      "properties": {
+        "abc": { "$ref": "#/$defs/abc_claim" },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "verdict": {
+          "enum": ["pass", "NOT_VERIFIED"]
+        },
+        "requested": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

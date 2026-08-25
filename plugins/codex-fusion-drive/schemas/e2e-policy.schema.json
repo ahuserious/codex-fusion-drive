@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fusion Drive e2e_policy overlay",
+  "description": "Hash-bound settings-interview overlay. No secrets. Persist under overlay key e2e_policy.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "unattended": {
+      "type": "boolean",
+      "default": false
+    },
+    "require_screenshots_per_feature": {
+      "type": "boolean",
+      "default": true
+    },
+    "require_video_evidence": {
+      "type": "boolean",
+      "default": true
+    },
+    "cursor_cloud_video": {
+      "type": "boolean",
+      "default": true,
+      "description": "Require video+logs when Cursor cloud is used."
+    },
+    "stably_authoring": {
+      "type": "boolean",
+      "default": true,
+      "description": "Author Stably cloud runs into owning e2e/ when e2e was requested."
+    },
+    "stably_depth": {
+      "enum": ["ci_shots_logs", "jig_video_logs", "full_sim_ui"],
+      "default": "ci_shots_logs",
+      "description": "full_sim_ui on unattended e2e unless an explicit policy already set a depth."
+    },
+    "loop_on_ci": {
+      "enum": ["n", "y", "heavy"],
+      "default": "n"
+    },
+    "auto_review_and_merge": {
+      "type": "boolean",
+      "default": false,
+      "description": "Never silent prod merge."
+    },
+    "fusion_preset": {
+      "type": "string",
+      "default": "maximum-intelligence"
+    },
+    "engine": {
+      "type": "string",
+      "default": "in_harness"
+    },
+    "validation_gating": {
+      "enum": ["on", "off"],
+      "default": "on"
+    },
+    "test_flow_author_style": {
+      "const": "verification-author-first"
+    },
+    "abc_contract": {
+      "type": "boolean",
+      "default": true
+    },
+    "side_terminal_teammates": {
+      "type": "boolean",
+      "default": true,
+      "description": "In pane editors, spawn side-terminal teammates (Orca/cmux), isolation none for evidence."
+    },
+    "evidence_isolation": {
+      "const": "none"
+    }
+  }
+}

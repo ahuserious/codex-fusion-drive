@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Produced site (no bank)</title>
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: var(--studio-font);
+      font-size: var(--studio-type-base);
+      background: var(--studio-color-bg);
+      color: var(--studio-color-fg);
+    }
+    header {
+      height: var(--studio-nav-height);
+      display: flex;
+      align-items: center;
+      padding: 0 calc(var(--studio-space) * 2);
+      backdrop-filter: blur(var(--studio-blur));
+      background: color-mix(in oklab, var(--studio-color-bg-2) 80%, transparent);
+    }
+    main { padding: calc(var(--studio-space) * 3); max-width: 720px; }
+    .card {
+      border-radius: var(--studio-radius);
+      box-shadow: var(--studio-shadow);
+      padding: calc(var(--studio-space) * 2);
+      background: var(--studio-color-bg-2);
+    }
+    button {
+      margin-top: var(--studio-space);
+      border: 0;
+      border-radius: var(--studio-radius);
+      background: var(--studio-color-accent);
+      color: #fff8ef;
+      font: inherit;
+      padding: 10px 16px;
+    }
+  </style>
+</head>
+<body data-entity="produced-site">
+  <header>Produced site — imports tokens.css only. No bank chrome. No Shift+Tab drawer.</header>
+  <main>
+    <div class="card">
+      <h1 style="font-size: var(--studio-type-xl); margin: 0 0 8px;">Separate entity</h1>
+      <p>This file is the produced site. The Lavish bank lives in <code>index.html</code> and is opened with <code>npx -y lavish-axi</code>.</p>
+      <button type="button">Accent from --studio-color-accent</button>
+    </div>
+  </main>
+</body>
+</html>

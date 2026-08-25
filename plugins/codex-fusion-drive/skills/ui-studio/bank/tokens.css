@@ -1,0 +1,25 @@
+/* Fusion Studio bank tokens. Produced site may import this file.
+   The bank chrome lives in index.html only — do not copy that DOM here. */
+:root {
+  --studio-color-bg: #14110d;
+  --studio-color-bg-2: #1e1a14;
+  --studio-color-fg: #f4ead8;
+  --studio-color-muted: #c4b49a;
+  --studio-color-accent: #d6532b;
+  --studio-color-accent-2: #e8c07a;
+  --studio-type-base: 16px;
+  --studio-type-ratio: 1.25;
+  --studio-type-sm: calc(var(--studio-type-base) / var(--studio-type-ratio));
+  --studio-type-lg: calc(var(--studio-type-base) * var(--studio-type-ratio));
+  --studio-type-xl: calc(var(--studio-type-lg) * var(--studio-type-ratio));
+  --studio-radius: 12px;
+  --studio-space: 8px;
+  --studio-nav-height: 56px;
+  --studio-shadow: 0 12px 40px color-mix(in oklab, #000 45%, transparent);
+  --studio-blur: 12px;
+  --studio-merge: 0.35;
+  --studio-effect-glow: 0.4;
+  --studio-bank-width: min(420px, 92vw);
+  --studio-font: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --studio-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}

@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.coverage
+htmlcov/
+.pytest_cache/
+.serena/
+.batch-runs/
+dist/
+build/
+*.egg-info/
+
+# Runtime state and credentials never belong in the repository.
+.relentless-inception/
+secrets.*
+*.secret
+.env
+.env.*
+
+# The Codex plugin manifest references this registration file. A parent
+# workspace ignore rule excludes generic .mcp.json files, so re-include only
+# the reviewed plugin-local descriptor.
+!plugins/relentless-inception/.mcp.json

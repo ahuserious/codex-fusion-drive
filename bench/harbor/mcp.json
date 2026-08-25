@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "codex-fusion-drive": {
+      "command": "/opt/codex-fusion-drive-bench/mcp_server_launcher.py",
+      "args": []
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "feature_type": "nav",
+  "source": "start-dev centrifuge",
+  "owns_produced_site": false,
+  "tokens": ["--accent", "--type-scale-1", "--stroke"]
+}

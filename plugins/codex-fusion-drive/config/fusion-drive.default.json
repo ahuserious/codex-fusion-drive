@@ -1,0 +1,1458 @@
+{
+  "$schema": "../schemas/fusion-drive.schema.json",
+  "active_profile": "xai-claude-oauth",
+  "auto_eval": {
+    "enabled": true,
+    "standalone_html": true,
+    "embedded_svg": true,
+    "external_assets": false,
+    "quantstats": false,
+    "deterministic": true,
+    "canonical_sorted_json_input": true,
+    "intelligence_contribution_requires_pinned_ablation": true,
+    "dimensions": [
+      "workflow_graph",
+      "api_spend",
+      "subscription_usage",
+      "efficiency",
+      "settings_changes",
+      "failures",
+      "gate_grades",
+      "tool_errors",
+      "hallucinations",
+      "honesty",
+      "over_reasoning",
+      "under_reasoning",
+      "model_intelligence_contribution"
+    ]
+  },
+  "batching": {
+    "default_mode": "bounded_microbatch",
+    "shared_prompt_prefix": true,
+    "prompt_cache_keys": true,
+    "subscription_concurrency": 1,
+    "max_batch_items": 50,
+    "provider_async_requires_explicit_confirmation": true,
+    "ambiguous_outcome_retry": false,
+    "cost_claim_policy": "only_provider_documented_discounts"
+  },
+  "engines": {
+    "all_grok_4_5": {
+      "kind": "client_orchestrated",
+      "panel": [
+        "all-grok-panel-a",
+        "all-grok-panel-b"
+      ],
+      "optional_panel": [],
+      "judge": "all-grok-judge",
+      "fuser": "all-grok-fuser",
+      "min_live_seats": 2,
+      "max_concurrency": 2,
+      "independent_first_pass": true,
+      "anonymize_model_identity": true,
+      "prohibit_majority_vote": true,
+      "preserve_minority_findings": true,
+      "max_fusion_depth": 1
+    },
+    "exaflop_mini": {
+      "anonymize_model_identity": true,
+      "fuser": "grok45-mini-fuser",
+      "independent_first_pass": true,
+      "judge": "grok45-xr-review",
+      "kind": "client_orchestrated",
+      "max_concurrency": 2,
+      "max_fusion_depth": 1,
+      "min_live_seats": 2,
+      "optional_panel": [],
+      "panel": [
+        "grok45-xr-mini-panel",
+        "sol-xr-mini-panel"
+      ],
+      "preserve_minority_findings": true,
+      "prohibit_majority_vote": true
+    },
+    "exaflop_reactor": {
+      "anonymize_model_identity": true,
+      "fuser": "fable5-oauth-fuser",
+      "independent_first_pass": true,
+      "judge": "all-grok-judge",
+      "kind": "client_orchestrated",
+      "max_concurrency": 3,
+      "max_fusion_depth": 1,
+      "min_live_seats": 3,
+      "optional_panel": [],
+      "panel": [
+        "sol-xr-panel-a",
+        "sol-xr-panel-b",
+        "fable5-oauth-panel"
+      ],
+      "preserve_minority_findings": true,
+      "prohibit_majority_vote": true
+    },
+    "in_harness": {
+      "kind": "client_orchestrated",
+      "panel": [
+        "grok45-panel",
+        "gpt56sol-panel",
+        "fable5-panel"
+      ],
+      "optional_panel": [],
+      "judge": "gpt56sol-judge",
+      "fuser": "gpt56sol-fuser",
+      "min_live_seats": 3,
+      "max_concurrency": 3,
+      "independent_first_pass": true,
+      "anonymize_model_identity": true,
+      "prohibit_majority_vote": true,
+      "preserve_minority_findings": true,
+      "max_fusion_depth": 1
+    },
+    "mini_fuse": {
+      "anonymize_model_identity": true,
+      "fuser": "grok45-mini-fuser",
+      "independent_first_pass": true,
+      "judge": "grok45-mini-judge",
+      "kind": "client_orchestrated",
+      "max_concurrency": 1,
+      "max_fusion_depth": 1,
+      "min_live_seats": 1,
+      "optional_panel": [],
+      "panel": [
+        "grok45-mini-panel"
+      ],
+      "preserve_minority_findings": true,
+      "prohibit_majority_vote": true
+    },
+    "openrouter_fusion": {
+      "kind": "server_managed",
+      "enabled": true,
+      "seat": "openrouter-fusion-seat",
+      "analysis_models": [
+        "x-ai/grok-4.5",
+        "openai/gpt-5.6-sol",
+        "anthropic/claude-fable-5"
+      ],
+      "judge_model": "openai/gpt-5.6-sol",
+      "reasoning": "xhigh",
+      "fallback_engine": "in_harness",
+      "inherit_in_harness_settings": false,
+      "max_fusion_depth": 1
+    },
+    "subscription_oauth": {
+      "kind": "client_orchestrated",
+      "panel": [
+        "grok45-oauth-panel",
+        "grok45-oauth-panel-b",
+        "fable5-oauth-panel"
+      ],
+      "optional_panel": [],
+      "judge": "grok45-oauth-judge",
+      "fuser": "fable5-oauth-fuser",
+      "min_live_seats": 3,
+      "max_concurrency": 2,
+      "independent_first_pass": true,
+      "anonymize_model_identity": true,
+      "prohibit_majority_vote": true,
+      "preserve_minority_findings": true,
+      "max_fusion_depth": 1
+    },
+    "xai_claude_oauth": {
+      "kind": "client_orchestrated",
+      "panel": [
+        "all-grok-panel-a",
+        "all-grok-panel-b",
+        "fable5-oauth-panel"
+      ],
+      "optional_panel": [],
+      "judge": "all-grok-judge",
+      "fuser": "fable5-oauth-fuser",
+      "min_live_seats": 3,
+      "max_concurrency": 3,
+      "independent_first_pass": true,
+      "anonymize_model_identity": true,
+      "prohibit_majority_vote": true,
+      "preserve_minority_findings": true,
+      "max_fusion_depth": 1
+    }
+  },
+  "gate_sets": {
+    "approval-gates": {
+      "enabled": true,
+      "fail_closed": true,
+      "reviewers": [
+        "grok45-gate-primary",
+        "grok45-gate-secondary"
+      ],
+      "required_passes": 2,
+      "max_concurrency": 2,
+      "max_revision_cycles": 2,
+      "requested_reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "normalization": "provider_ceiling",
+      "stages": {
+        "synthesis": {
+          "owner": "fusion_engine",
+          "automatic": true,
+          "required_evidence": [
+            "panel_artifacts",
+            "judge_artifact",
+            "synthesis_hash"
+          ]
+        },
+        "plan": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "requirements_trace",
+            "risk_analysis",
+            "workflow_report"
+          ]
+        },
+        "pre_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "confirmed_plan",
+            "goal_receipt",
+            "scope_boundaries"
+          ]
+        },
+        "subagent_pre_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "subagent_scope",
+            "preset_hash"
+          ]
+        },
+        "subagent_post_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "subagent_result",
+            "tool_errors",
+            "verification"
+          ]
+        },
+        "post_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "diff",
+            "tests",
+            "requirement_coverage"
+          ]
+        },
+        "final": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "gate_verdict",
+            "cost_ledger",
+            "provenance"
+          ]
+        },
+        "summarize": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "decisions",
+            "open_risks",
+            "verification_state"
+          ]
+        }
+      }
+    },
+    "oauth-approval-gates": {
+      "enabled": true,
+      "fail_closed": true,
+      "reviewers": [
+        "grok45-oauth-gate-primary",
+        "grok45-oauth-gate-secondary"
+      ],
+      "required_passes": 2,
+      "max_concurrency": 1,
+      "max_revision_cycles": 2,
+      "requested_reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "normalization": "provider_ceiling",
+      "stages": {
+        "synthesis": {
+          "owner": "fusion_engine",
+          "automatic": true,
+          "required_evidence": [
+            "panel_artifacts",
+            "judge_artifact",
+            "synthesis_hash"
+          ]
+        },
+        "plan": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "requirements_trace",
+            "risk_analysis",
+            "workflow_report"
+          ]
+        },
+        "pre_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "confirmed_plan",
+            "goal_receipt",
+            "scope_boundaries"
+          ]
+        },
+        "subagent_pre_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "subagent_scope",
+            "preset_hash"
+          ]
+        },
+        "subagent_post_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "subagent_result",
+            "tool_errors",
+            "verification"
+          ]
+        },
+        "post_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "diff",
+            "tests",
+            "requirement_coverage"
+          ]
+        },
+        "final": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "gate_verdict",
+            "cost_ledger",
+            "provenance"
+          ]
+        },
+        "summarize": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "decisions",
+            "open_risks",
+            "verification_state"
+          ]
+        }
+      }
+    },
+    "xai-serialized-approval-gates": {
+      "enabled": true,
+      "fail_closed": true,
+      "reviewers": [
+        "grok45-gate-primary",
+        "grok45-gate-secondary"
+      ],
+      "required_passes": 2,
+      "max_concurrency": 1,
+      "max_revision_cycles": 2,
+      "requested_reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "normalization": "provider_ceiling",
+      "stages": {
+        "synthesis": {
+          "owner": "fusion_engine",
+          "automatic": true,
+          "required_evidence": [
+            "panel_artifacts",
+            "judge_artifact",
+            "synthesis_hash"
+          ]
+        },
+        "plan": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "requirements_trace",
+            "risk_analysis",
+            "workflow_report"
+          ]
+        },
+        "pre_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "confirmed_plan",
+            "goal_receipt",
+            "scope_boundaries"
+          ]
+        },
+        "subagent_pre_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "subagent_scope",
+            "preset_hash"
+          ]
+        },
+        "subagent_post_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "subagent_result",
+            "tool_errors",
+            "verification"
+          ]
+        },
+        "post_execution": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "diff",
+            "tests",
+            "requirement_coverage"
+          ]
+        },
+        "final": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "gate_verdict",
+            "cost_ledger",
+            "provenance"
+          ]
+        },
+        "summarize": {
+          "owner": "codex_host",
+          "automatic": false,
+          "required_evidence": [
+            "decisions",
+            "open_risks",
+            "verification_state"
+          ]
+        }
+      }
+    }
+  },
+  "human_sim_users": {
+    "enabled": true,
+    "requires_user_preferences": true,
+    "vectors": [
+      "platform_runtime",
+      "ui_ux",
+      "viewports",
+      "personas",
+      "accessibility",
+      "logs",
+      "performance",
+      "privacy_security",
+      "data_integrity",
+      "external_writes"
+    ],
+    "extra_goal_requires_explicit_confirmation": true,
+    "continuous_loop_is_manifest_driven": true,
+    "stop_when": [
+      "zero_open_errors",
+      "all_acceptance_criteria_evidenced",
+      "no_stalled_subagents",
+      "performance_budgets_pass"
+    ],
+    "handoff_after_same_failure": 3
+  },
+  "integrations": {
+    "repo_merge": {
+      "skill_path": "/Users/DanBot/.claude/skills/repo-merge/SKILL.md",
+      "external_writes_require_approval": true,
+      "destructive_actions_require_approval": true
+    },
+    "gitnexus": {
+      "cli_command": "gitnexus",
+      "skill_path": "/Users/DanBot/.claude/skills/gitnexus/SKILL.md",
+      "mcp_capability_must_be_probed_separately": true,
+      "auto_install": false
+    }
+  },
+  "lifecycle": {
+    "schema_version": 1,
+    "require_explicit_user_confirmation": true,
+    "require_claude_goal_before_execution": true,
+    "host_goal_creation_tool": "codex_app.create_thread",
+    "confirmation_proof": "host_receipt_not_cryptographic_human_identity",
+    "states": [
+      "awaiting_plan_gate",
+      "awaiting_user_confirmation",
+      "awaiting_claude_goal",
+      "awaiting_pre_execution_gate",
+      "ready_for_execution",
+      "executing",
+      "awaiting_post_execution",
+      "awaiting_final",
+      "awaiting_summary",
+      "complete"
+    ],
+    "hash_chain": true,
+    "compare_and_swap": true
+  },
+  "model_fallbacks": {
+    "claude-fable-5": "claude-opus-5"
+  },
+  "orchestration": {
+    "fusion_plan": false,
+    "preset": "high",
+    "subagent_review": "off",
+    "review_rungs": {
+      "light": [
+        "grok45-mini-panel",
+        "grok45-mini-judge"
+      ],
+      "exaflop": [
+        "grok45-xr-mini-panel",
+        "sol-xr-mini-panel",
+        "grok45-xr-review"
+      ]
+    }
+  },
+  "profiles": {
+    "all-grok-4.5": {
+      "engine": "all_grok_4_5",
+      "gate_set": "approval-gates",
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 80,
+        "max_total_tokens": 4000000,
+        "max_input_tokens": 2400000,
+        "max_output_tokens": 800000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 128,
+        "max_wall_seconds": null,
+        "max_cost_usd": 150.0,
+        "approval_threshold_usd": 25.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "execution": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "require_confirmed_plan": true,
+        "require_claude_goal": true,
+        "allow_recursive_codex_cli": false
+      }
+    },
+    "exaflop-mini": {
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 40,
+        "max_total_tokens": 600000,
+        "max_input_tokens": 400000,
+        "max_output_tokens": 100000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 32,
+        "max_wall_seconds": null,
+        "max_cost_usd": 25.0,
+        "approval_threshold_usd": 10.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "engine": "exaflop_mini",
+      "execution": {
+        "allow_recursive_codex_cli": false,
+        "model": "gpt-5.6-sol",
+        "owner": "codex_host",
+        "reasoning": "low",
+        "require_claude_goal": true,
+        "require_confirmed_plan": true
+      },
+      "gate_set": "approval-gates"
+    },
+    "exaflop-reactor": {
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 80,
+        "max_total_tokens": 4000000,
+        "max_input_tokens": 2400000,
+        "max_output_tokens": 800000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 128,
+        "max_wall_seconds": null,
+        "max_cost_usd": 150.0,
+        "approval_threshold_usd": 25.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "engine": "exaflop_reactor",
+      "execution": {
+        "allow_recursive_codex_cli": false,
+        "max_fix_cycles": 2,
+        "model": "gpt-5.6-sol",
+        "owner": "codex_host",
+        "reasoning": "xhigh",
+        "require_claude_goal": true,
+        "require_confirmed_plan": true,
+        "require_diff_review": true,
+        "run_tests": true
+      },
+      "gate_set": "approval-gates"
+    },
+    "maximum-intelligence": {
+      "engine": "in_harness",
+      "gate_set": "approval-gates",
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 80,
+        "max_total_tokens": 4000000,
+        "max_input_tokens": 2400000,
+        "max_output_tokens": 800000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 128,
+        "max_wall_seconds": null,
+        "max_cost_usd": 150.0,
+        "approval_threshold_usd": 25.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "execution": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "require_confirmed_plan": true,
+        "require_claude_goal": true,
+        "allow_recursive_codex_cli": false,
+        "run_tests": true,
+        "require_diff_review": true,
+        "max_fix_cycles": 2
+      }
+    },
+    "mini-fuse": {
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 20,
+        "max_total_tokens": 600000,
+        "max_input_tokens": 400000,
+        "max_output_tokens": 100000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 32,
+        "max_wall_seconds": null,
+        "max_cost_usd": 10.0,
+        "approval_threshold_usd": 5.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "engine": "mini_fuse",
+      "execution": {
+        "allow_recursive_codex_cli": false,
+        "model": "gpt-5.6-sol",
+        "owner": "codex_host",
+        "reasoning": "low",
+        "require_claude_goal": true,
+        "require_confirmed_plan": true
+      },
+      "gate_set": "approval-gates"
+    },
+    "openrouter-fusion": {
+      "engine": "openrouter_fusion",
+      "gate_set": "approval-gates",
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 80,
+        "max_total_tokens": 4000000,
+        "max_input_tokens": 2400000,
+        "max_output_tokens": 800000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 128,
+        "max_wall_seconds": null,
+        "max_cost_usd": 150.0,
+        "approval_threshold_usd": 25.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "execution": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "require_confirmed_plan": true,
+        "require_claude_goal": true,
+        "allow_recursive_codex_cli": false
+      }
+    },
+    "subscription-oauth": {
+      "engine": "subscription_oauth",
+      "gate_set": "oauth-approval-gates",
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 80,
+        "max_total_tokens": 4000000,
+        "max_input_tokens": 2400000,
+        "max_output_tokens": 800000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 128,
+        "max_wall_seconds": null,
+        "max_cost_usd": 150.0,
+        "approval_threshold_usd": 25.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "execution": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "require_confirmed_plan": true,
+        "require_claude_goal": true,
+        "allow_recursive_codex_cli": false,
+        "run_tests": true,
+        "require_diff_review": true,
+        "max_fix_cycles": 2
+      }
+    },
+    "xai-claude-oauth": {
+      "engine": "xai_claude_oauth",
+      "gate_set": "xai-serialized-approval-gates",
+      "budgets": {
+        "enforcement": "hard_stop",
+        "unknown_cost_policy": "report_unknown",
+        "max_calls": 80,
+        "max_total_tokens": 4000000,
+        "max_input_tokens": 2400000,
+        "max_output_tokens": 800000,
+        "max_reasoning_tokens": null,
+        "max_tool_calls": 128,
+        "max_wall_seconds": null,
+        "max_cost_usd": 150.0,
+        "approval_threshold_usd": 25.0,
+        "warning_fraction": 0.8,
+        "reserve_fraction_for_synthesis_and_gates": 0.3
+      },
+      "execution": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh",
+        "require_confirmed_plan": true,
+        "require_claude_goal": true,
+        "allow_recursive_codex_cli": false,
+        "run_tests": true,
+        "require_diff_review": true,
+        "max_fix_cycles": 2
+      }
+    }
+  },
+  "providers": {
+    "anthropic_api": {
+      "enabled": false,
+      "transport": "anthropic_messages",
+      "base_url": "https://api.anthropic.com/v1",
+      "auth": {
+        "mode": "api_key_env",
+        "api_key_env": "ANTHROPIC_API_KEY"
+      },
+      "billing": "metered_api",
+      "max_concurrency": 2,
+      "request_timeout_seconds": 900,
+      "max_retries": 2,
+      "async_batch": {
+        "supported": true,
+        "endpoint": "/v1/messages/batches",
+        "completion_window": "provider_managed",
+        "discount_claim": "provider_documented_50_percent"
+      }
+    },
+    "codex_host": {
+      "enabled": true,
+      "transport": "codex_host",
+      "auth": {
+        "mode": "host_owned"
+      },
+      "billing": "subscription_or_host_managed",
+      "max_concurrency": 3,
+      "async_batch": {
+        "supported": false,
+        "reason": "Native Codex subagents are host-owned; the plugin supplies presets rather than reusing host credentials."
+      }
+    },
+    "claude_oauth": {
+      "enabled": true,
+      "transport": "claude_cli_oauth",
+      "command": "claude",
+      "auth": {
+        "mode": "cli_oauth_keychain",
+        "api_key_env": "ANTHROPIC_API_KEY"
+      },
+      "billing": "subscription",
+      "allocated_subscription_cost_usd_per_month": null,
+      "max_concurrency": 1,
+      "request_timeout_seconds": 1800,
+      "max_retries": 0,
+      "async_batch": {
+        "supported": false,
+        "reason": "Claude Code OAuth is separate from the Anthropic Message Batches API; isolated subprocesses are serialized."
+      }
+    },
+    "codex_oauth": {
+      "enabled": true,
+      "transport": "codex_cli_oauth",
+      "command": "codex",
+      "auth": {
+        "mode": "cli_oauth_keychain",
+        "api_key_env": "OPENAI_API_KEY"
+      },
+      "billing": "subscription",
+      "allocated_subscription_cost_usd_per_month": null,
+      "max_concurrency": 1,
+      "request_timeout_seconds": 1800,
+      "max_retries": 0,
+      "async_batch": {
+        "supported": false,
+        "reason": "Codex CLI ChatGPT auth is not the OpenAI Batch API; isolated subprocesses are serialized."
+      }
+    },
+    "grok_oauth": {
+      "enabled": true,
+      "transport": "grok_cli_oauth",
+      "command": "grok",
+      "auth": {
+        "mode": "cli_oauth_keychain",
+        "api_key_env": "XAI_API_KEY"
+      },
+      "billing": "subscription",
+      "allocated_subscription_cost_usd_per_month": null,
+      "max_concurrency": 1,
+      "request_timeout_seconds": 1800,
+      "max_retries": 0,
+      "async_batch": {
+        "supported": false,
+        "reason": "A CLI OAuth subscription is not the xAI Batch API; isolated subprocesses are serialized."
+      }
+    },
+    "openai_api": {
+      "enabled": true,
+      "transport": "openai_responses",
+      "base_url": "https://api.openai.com/v1",
+      "auth": {
+        "mode": "api_key_env",
+        "api_key_env": "OPENAI_API_KEY"
+      },
+      "billing": "metered_api",
+      "max_concurrency": 2,
+      "request_timeout_seconds": 900,
+      "max_retries": 2,
+      "async_batch": {
+        "supported": true,
+        "endpoint": "/v1/responses",
+        "completion_window": "24h",
+        "discount_claim": "provider_documented_50_percent"
+      }
+    },
+    "openrouter_api": {
+      "enabled": false,
+      "transport": "openrouter_chat",
+      "base_url": "https://openrouter.ai/api/v1",
+      "auth": {
+        "mode": "api_key_env",
+        "api_key_env": "OPENROUTER_API_KEY"
+      },
+      "billing": "metered_api",
+      "max_concurrency": 3,
+      "request_timeout_seconds": 1200,
+      "max_retries": 2,
+      "async_batch": {
+        "supported": false,
+        "models": [],
+        "reason": "No general asynchronous completion Batch API is documented; use bounded microbatching and provider caching."
+      }
+    },
+    "openrouter_fusion_api": {
+      "enabled": false,
+      "transport": "openrouter_fusion",
+      "base_url": "https://openrouter.ai/api/v1",
+      "auth": {
+        "mode": "api_key_env",
+        "api_key_env": "OPENROUTER_API_KEY"
+      },
+      "billing": "metered_api",
+      "max_concurrency": 1,
+      "request_timeout_seconds": 1800,
+      "max_retries": 1,
+      "async_batch": {
+        "supported": false,
+        "models": [],
+        "reason": "Fusion is one server-managed fan-out request, not a provider batch job."
+      }
+    },
+    "xai_api": {
+      "enabled": true,
+      "transport": "xai_responses",
+      "base_url": "https://api.x.ai/v1",
+      "auth": {
+        "mode": "api_key_env",
+        "api_key_env": "XAI_API_KEY"
+      },
+      "billing": "metered_api",
+      "max_concurrency": 2,
+      "request_timeout_seconds": 900,
+      "max_retries": 2,
+      "async_batch": {
+        "supported": false,
+        "models": [],
+        "reason": "The xAI Batch API rejects grok-4.5; use bounded microbatching and prompt caching instead."
+      }
+    }
+  },
+  "reporting": {
+    "return_mermaid_after_planning": true,
+    "return_full_redacted_config_after_planning": true,
+    "return_reasoning_normalization": true,
+    "return_updated_report_for_config_proposals": true,
+    "max_inline_response_chars": 24000,
+    "theme": "warm_signal_light"
+  },
+  "rescue": {
+    "enabled": true,
+    "max_attempts_per_unit": 3,
+    "same_failure_fingerprint_handoff_after": 3,
+    "max_total_cycles": 12,
+    "preserve_failed_attempts": true,
+    "immutable_problem_packet": true,
+    "resume_from_last_proven_checkpoint": true,
+    "fresh_context_diagnosis": true,
+    "cross_perspective_critique": true,
+    "human_handoff_on_stall": true
+  },
+  "schema_version": 2,
+  "seats": {
+    "all-grok-fuser": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "fuser",
+      "persona": "Grok generative fuser preserving supported dissent.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 49152,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "final_answer"
+    },
+    "all-grok-judge": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "judge",
+      "persona": "Anonymous Grok comparative judge.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "judge_analysis"
+    },
+    "all-grok-panel-a": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Independent Grok implementation planner.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "all-grok-panel-b": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Independent Grok adversarial falsifier.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "fable5-oauth-fuser": {
+      "enabled": true,
+      "provider": "claude_oauth",
+      "model": "claude-fable-5",
+      "role": "fuser",
+      "persona": "Subscription-backed generative fuser; synthesize the strongest plan while preserving supported dissent.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "max",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 49152,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "final_answer"
+    },
+    "fable5-oauth-panel": {
+      "enabled": true,
+      "provider": "claude_oauth",
+      "model": "claude-fable-5",
+      "role": "panel",
+      "persona": "Subscription-backed Fable panel seat in safe mode with tools disabled.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "max",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "fable5-panel": {
+      "enabled": true,
+      "provider": "openrouter_api",
+      "model": "anthropic/claude-fable-5",
+      "role": "panel",
+      "persona": "Independent conceptual critic; produce an alternative plan and identify hidden assumptions.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "gpt56sol-fuser": {
+      "enabled": true,
+      "provider": "openrouter_api",
+      "model": "openai/gpt-5.6-sol",
+      "role": "fuser",
+      "persona": "Generative fuser; build a stronger answer from raw evidence and preserve supported dissent.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 49152,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "final_answer"
+    },
+    "gpt56sol-judge": {
+      "enabled": true,
+      "provider": "openrouter_api",
+      "model": "openai/gpt-5.6-sol",
+      "role": "judge",
+      "persona": "Anonymous comparative judge; diagnose contradictions without majority voting.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "judge_analysis"
+    },
+    "gpt56sol-panel": {
+      "enabled": true,
+      "provider": "openrouter_api",
+      "model": "openai/gpt-5.6-sol",
+      "role": "panel",
+      "persona": "Independent systems and implementation planner; trace constraints and edge cases.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "grok45-gate-primary": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "verifier",
+      "persona": "Fail-closed approval reviewer; reject unsupported completion claims.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "gate_verdict"
+    },
+    "grok45-gate-secondary": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "verifier",
+      "persona": "Independent adversarial gate reviewer; seek counterexamples and missing evidence.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "gate_verdict"
+    },
+    "grok45-mini-fuser": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "fuser",
+      "persona": "Mini-fuse compressor; return a short, evidence-grounded summary of the subagent result for the orchestrator.",
+      "reasoning": "low",
+      "effective_reasoning": "low",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 2048,
+      "timeout_seconds": 600,
+      "tool_policy": "none",
+      "structured_output": "final_answer"
+    },
+    "grok45-mini-judge": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "judge",
+      "persona": "Mini-fuse judge; check the review for contradictions without majority voting.",
+      "reasoning": "low",
+      "effective_reasoning": "low",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 2048,
+      "timeout_seconds": 600,
+      "tool_policy": "none",
+      "structured_output": "judge_analysis"
+    },
+    "grok45-mini-panel": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Light-duty mini-fuse reviewer for completed subagent and adversarial-review work; verify the result against its task and flag concrete gaps.",
+      "reasoning": "low",
+      "effective_reasoning": "low",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 4096,
+      "timeout_seconds": 600,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "grok45-oauth-gate-primary": {
+      "enabled": true,
+      "provider": "grok_oauth",
+      "model": "grok-4.5",
+      "role": "verifier",
+      "persona": "Subscription-backed fail-closed approval reviewer; reject unsupported completion claims.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "gate_verdict"
+    },
+    "grok45-oauth-gate-secondary": {
+      "enabled": true,
+      "provider": "grok_oauth",
+      "model": "grok-4.5",
+      "role": "verifier",
+      "persona": "Subscription-backed adversarial approval reviewer; seek counterexamples and missing evidence.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "gate_verdict"
+    },
+    "grok45-oauth-judge": {
+      "enabled": true,
+      "provider": "grok_oauth",
+      "model": "grok-4.5",
+      "role": "judge",
+      "persona": "Subscription-backed anonymous comparative judge; diagnose contradictions without majority voting.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "judge_analysis"
+    },
+    "grok45-oauth-panel": {
+      "enabled": true,
+      "provider": "grok_oauth",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Subscription-backed Grok panel seat with tools, memory, and web disabled.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "grok45-oauth-panel-b": {
+      "enabled": true,
+      "provider": "grok_oauth",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Subscription-backed adversarial Grok panel seat; seek counterexamples with tools, memory, subagents, and web disabled.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "grok45-panel": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Independent evidence-first Grok researcher; preserve falsifiable minority findings.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "grok45-xr-mini-panel": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "panel",
+      "persona": "Exaflop mini-fuse reviewer; verify the completed subagent result against its task at full depth.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "grok45-xr-review": {
+      "enabled": true,
+      "provider": "xai_api",
+      "model": "grok-4.5",
+      "role": "judge",
+      "persona": "Exaflop review judge; reconcile the mini panel reviews and flag contradictions for the orchestrator report.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 4096,
+      "timeout_seconds": 600,
+      "tool_policy": "none",
+      "structured_output": "judge_analysis"
+    },
+    "openrouter-fusion-seat": {
+      "enabled": true,
+      "provider": "openrouter_fusion_api",
+      "model": "openrouter/fusion",
+      "role": "fuser",
+      "persona": "OpenRouter server-managed Fusion seat, isolated from in-harness settings.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 49152,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "final_answer",
+      "openrouter_fusion": {
+        "analysis_models": [
+          "x-ai/grok-4.5",
+          "openai/gpt-5.6-sol",
+          "anthropic/claude-fable-5"
+        ],
+        "judge_model": "openai/gpt-5.6-sol",
+        "reasoning": {
+          "effort": "xhigh",
+          "max_tokens": null,
+          "exclude": false
+        },
+        "max_tool_calls": 16,
+        "max_completion_tokens": 49152,
+        "temperature": 1.0
+      }
+    },
+    "sol-codex-fuser": {
+      "enabled": true,
+      "provider": "codex_oauth",
+      "model": "gpt-5.6-sol",
+      "role": "fuser",
+      "persona": "Subscription-backed generative fuser; build a stronger answer from raw evidence and preserve supported dissent.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 49152,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "final_answer"
+    },
+    "sol-codex-judge": {
+      "enabled": true,
+      "provider": "codex_oauth",
+      "model": "gpt-5.6-sol",
+      "role": "judge",
+      "persona": "Subscription-backed anonymous comparative judge; diagnose contradictions without majority voting.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 24576,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "judge_analysis"
+    },
+    "sol-codex-panel": {
+      "enabled": true,
+      "provider": "codex_oauth",
+      "model": "gpt-5.6-sol",
+      "role": "panel",
+      "persona": "Subscription-backed GPT 5.6 sol systems planner; trace constraints and edge cases.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 1200,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "sol-xr-mini-panel": {
+      "enabled": true,
+      "provider": "openai_api",
+      "model": "gpt-5.6-sol",
+      "role": "panel",
+      "persona": "Exaflop mini-fuse second reviewer; independent GPT 5.6 sol check of the subagent result.",
+      "reasoning": "high",
+      "effective_reasoning": "high",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 8192,
+      "timeout_seconds": 600,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "sol-xr-panel-a": {
+      "enabled": true,
+      "provider": "openai_api",
+      "model": "gpt-5.6-sol",
+      "role": "panel",
+      "persona": "Independent GPT 5.6 sol systems planner for exaflop-reactor; trace constraints and edge cases.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 900,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    },
+    "sol-xr-panel-b": {
+      "enabled": true,
+      "provider": "openai_api",
+      "model": "gpt-5.6-sol",
+      "role": "panel",
+      "persona": "Independent GPT 5.6 sol adversarial falsifier for exaflop-reactor; seek counterexamples.",
+      "reasoning": "xhigh",
+      "effective_reasoning": "xhigh",
+      "reasoning_max_tokens": null,
+      "max_output_tokens": 32768,
+      "timeout_seconds": 900,
+      "tool_policy": "none",
+      "structured_output": "panel_report"
+    }
+  },
+  "subagent_presets": {
+    "all-grok-4.5": {
+      "driver": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh"
+      },
+      "worker_engine": "all_grok_4_5",
+      "worker_reasoning": "xhigh",
+      "gate_set": "approval-gates",
+      "batch_mode": "bounded_microbatch",
+      "max_parallel_subagents": 2,
+      "max_fusion_depth": 1
+    },
+    "canonical-in-harness": {
+      "driver": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "xhigh"
+      },
+      "worker_engine": "in_harness",
+      "worker_reasoning": "xhigh",
+      "gate_set": "approval-gates",
+      "batch_mode": "bounded_microbatch",
+      "max_parallel_subagents": 3,
+      "max_fusion_depth": 1
+    },
+    "exaflop-reactor": {
+      "batch_mode": "bounded_microbatch",
+      "driver": {
+        "model": "gpt-5.6-sol",
+        "owner": "codex_host",
+        "reasoning": "xhigh"
+      },
+      "gate_set": "approval-gates",
+      "max_fusion_depth": 1,
+      "max_parallel_subagents": 4,
+      "worker_engine": "exaflop_mini",
+      "worker_reasoning": "xhigh"
+    },
+    "grok-fusion-drive": {
+      "driver": {
+        "owner": "codex_host",
+        "model": "gpt-5.6-sol",
+        "reasoning": "ultra"
+      },
+      "worker_engine": "all_grok_4_5",
+      "worker_reasoning": "xhigh",
+      "gate_set": "approval-gates",
+      "batch_mode": "bounded_microbatch",
+      "max_parallel_subagents": 2,
+      "max_fusion_depth": 1
+    },
+    "mini-fuse": {
+      "batch_mode": "bounded_microbatch",
+      "driver": {
+        "model": "gpt-5.6-sol",
+        "owner": "codex_host",
+        "reasoning": "low"
+      },
+      "gate_set": "approval-gates",
+      "max_fusion_depth": 1,
+      "max_parallel_subagents": 4,
+      "worker_engine": "mini_fuse",
+      "worker_reasoning": "low"
+    }
+  },
+  "e2e_policy": {
+    "unattended": false,
+    "require_screenshots_per_feature": true,
+    "require_video_evidence": true,
+    "cursor_cloud_video": true,
+    "stably_authoring": true,
+    "stably_depth": "ci_shots_logs",
+    "loop_on_ci": "n",
+    "auto_review_and_merge": false,
+    "models": "maximum-intelligence",
+    "fusion_preset": "maximum-intelligence",
+    "engine": "in_harness",
+    "validation_gating": "on",
+    "test_flow_author_style": "verification-author-first",
+    "codex_oauth_required_for_sol_subscription": true,
+    "spawn_isolation": "none",
+    "spawn_surface": "side_terminal_teammates",
+    "api_jig_required_before_live": true,
+    "abc_contract": true,
+    "side_terminal_teammates": true,
+    "evidence_isolation": "none"
+  }
+}

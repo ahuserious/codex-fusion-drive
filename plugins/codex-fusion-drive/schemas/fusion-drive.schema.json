@@ -1,0 +1,400 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DanRepaci/codex-fusion-drive/schemas/fusion-drive.schema.json",
+  "title": "Codex Fusion Drive configuration",
+  "description": "Schema-v2 control-plane configuration. Runtime validation also enforces cross-reference and invariant rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "active_profile",
+    "providers",
+    "seats",
+    "engines",
+    "gate_sets",
+    "profiles",
+    "subagent_presets",
+    "lifecycle",
+    "batching",
+    "integrations",
+    "rescue",
+    "human_sim_users",
+    "auto_eval",
+    "reporting"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 2
+    },
+    "active_profile": {
+      "type": "string"
+    },
+    "providers": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/provider"
+      }
+    },
+    "seats": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/$defs/seat"
+      }
+    },
+    "engines": {
+      "type": "object",
+      "required": [
+        "in_harness",
+        "subscription_oauth",
+        "xai_claude_oauth",
+        "openrouter_fusion",
+        "all_grok_4_5"
+      ],
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "gate_sets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "subagent_presets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": [
+        "require_explicit_user_confirmation",
+        "require_claude_goal_before_execution",
+        "host_goal_creation_tool"
+      ],
+      "properties": {
+        "require_explicit_user_confirmation": {
+          "const": true
+        },
+        "require_claude_goal_before_execution": {
+          "const": true
+        },
+        "host_goal_creation_tool": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "batching": {
+      "type": "object"
+    },
+    "integrations": {
+      "type": "object"
+    },
+    "rescue": {
+      "type": "object"
+    },
+    "human_sim_users": {
+      "type": "object"
+    },
+    "auto_eval": {
+      "type": "object"
+    },
+    "reporting": {
+      "type": "object"
+    },
+    "model_fallbacks": {
+      "type": "object",
+      "description": "Model slug -> replacement slug, applied to seats, profile execution models, and subagent drivers when the configured model is unavailable.",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "e2e_policy": {
+      "$ref": "#/$defs/e2e_policy"
+    },
+    "orchestration": {
+      "type": "object",
+      "description": "Host orchestration toggles. Codex has no statusline contract, so these live in the configuration where the gates' exact-hash approval already covers them.",
+      "properties": {
+        "fusion_plan": {
+          "type": "boolean"
+        },
+        "preset": {
+          "enum": [
+            "off",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "subagent_review": {
+          "enum": [
+            "off",
+            "light",
+            "exaflop"
+          ]
+        },
+        "review_rungs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "e2e_policy": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Hash-bound e2e overlay. No secrets. Unattended e2e overrides interview.",
+      "properties": {
+        "unattended": {
+          "type": "boolean"
+        },
+        "require_screenshots_per_feature": {
+          "type": "boolean"
+        },
+        "require_video_evidence": {
+          "type": "boolean"
+        },
+        "cursor_cloud_video": {
+          "type": "boolean"
+        },
+        "stably_authoring": {
+          "type": "boolean"
+        },
+        "stably_depth": {
+          "enum": [
+            "ci_shots_logs",
+            "jig_video_logs",
+            "full_sim_ui"
+          ]
+        },
+        "loop_on_ci": {
+          "enum": [
+            "n",
+            "y",
+            "heavy"
+          ]
+        },
+        "auto_review_and_merge": {
+          "type": "boolean"
+        },
+        "models": {
+          "type": "string"
+        },
+        "fusion_preset": {
+          "type": "string"
+        },
+        "engine": {
+          "type": "string"
+        },
+        "validation_gating": {
+          "enum": [
+            "on",
+            "off"
+          ]
+        },
+        "test_flow_author_style": {
+          "const": "verification-author-first"
+        },
+        "codex_oauth_required_for_sol_subscription": {
+          "type": "boolean"
+        },
+        "spawn_isolation": {
+          "enum": [
+            "none"
+          ]
+        },
+        "spawn_surface": {
+          "enum": [
+            "side_terminal_teammates"
+          ]
+        },
+        "api_jig_required_before_live": {
+          "type": "boolean"
+        },
+        "abc_contract": {
+          "type": "boolean"
+        },
+        "side_terminal_teammates": {
+          "type": "boolean"
+        },
+        "evidence_isolation": {
+          "const": "none"
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "transport",
+        "auth",
+        "billing",
+        "max_concurrency",
+        "async_batch"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "transport": {
+          "enum": [
+            "xai_responses",
+            "openrouter_chat",
+            "openrouter_fusion",
+            "openai_responses",
+            "anthropic_messages",
+            "grok_cli_oauth",
+            "claude_cli_oauth",
+            "codex_cli_oauth",
+            "codex_host"
+          ]
+        },
+        "base_url": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        },
+        "auth": {
+          "type": "object"
+        },
+        "billing": {
+          "type": "string"
+        },
+        "allocated_subscription_cost_usd_per_month": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "max_concurrency": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "request_timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "async_batch": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "seat": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "provider",
+        "model",
+        "role",
+        "persona",
+        "reasoning",
+        "effective_reasoning",
+        "reasoning_max_tokens",
+        "max_output_tokens",
+        "timeout_seconds",
+        "tool_policy",
+        "structured_output"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "panel",
+            "judge",
+            "fuser",
+            "verifier"
+          ]
+        },
+        "persona": {
+          "type": "string"
+        },
+        "reasoning": {
+          "enum": [
+            "none",
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ]
+        },
+        "effective_reasoning": {
+          "enum": [
+            "none",
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "ultra"
+          ]
+        },
+        "reasoning_max_tokens": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "max_output_tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "tool_policy": {
+          "type": "string"
+        },
+        "structured_output": {
+          "type": "string"
+        },
+        "openrouter_fusion": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

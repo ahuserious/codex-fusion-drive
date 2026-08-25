@@ -1,0 +1,51 @@
+{
+  "untrusted": true,
+  "re_read_files_before_cite": true,
+  "prompt_path": "prompt.md",
+  "harvested_at": "2026-08-25",
+  "sites": [
+    {
+      "url": "https://daisyui.com/components/",
+      "title": "daisyUI component catalog",
+      "why": "lavish-axi fallback design system (DaisyUI v5 + Tailwind browser runtime). Public catalog, 68 components.",
+      "feature_types": ["nav", "card", "button", "form", "slider", "effect"],
+      "notes": "Navbar, card, button, range slider, aura/hover-3d effects, theme-controller, drawer. Harvested as types, not a pixel clone."
+    },
+    {
+      "url": "https://daisyui.com/components/range/",
+      "title": "daisyUI range slider",
+      "why": "Slider → CSS variable binding for the bank.",
+      "feature_types": ["slider"]
+    },
+    {
+      "url": "https://daisyui.com/components/navbar/",
+      "title": "daisyUI navbar",
+      "why": "Shared nav chrome (sticky, blur, density).",
+      "feature_types": ["nav"]
+    },
+    {
+      "url": "https://github.com/kunchenguid/lavish-axi",
+      "title": "lavish-axi editor",
+      "why": "Sidecar runtime. Bank opens via npx -y lavish-axi. Separate entity from produced site.",
+      "feature_types": ["card", "nav"]
+    },
+    {
+      "url": "https://linear.app",
+      "title": "Linear (public marketing chrome)",
+      "why": "App-chrome density: compact nav, issue cards, keyboard-first. Public pages only.",
+      "feature_types": ["nav", "card", "type"]
+    },
+    {
+      "url": "https://stripe.com",
+      "title": "Stripe (public marketing + docs chrome)",
+      "why": "Form/focus-ring discipline and restrained type scale. Public pages only.",
+      "feature_types": ["form", "type", "button"]
+    },
+    {
+      "url": "https://vercel.com",
+      "title": "Vercel (public marketing)",
+      "why": "Marketing type ratio, dark/light merge, glow effects.",
+      "feature_types": ["type", "merge", "effect"]
+    }
+  ]
+}
