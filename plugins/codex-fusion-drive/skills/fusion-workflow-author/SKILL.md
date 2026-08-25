@@ -10,6 +10,11 @@ Author orchestration graphs that spawn named evidence agents. This skill is
 (generic Rhai host API only; no `fork_context`; no e2e recipes) or for
 `verification-author` (that agent writes into owning `e2e/` and does not grade).
 
+`/ultraplan` plans **in this terminal** (local `in_harness` fusion), then on
+Grok **fires create-workflow** with TUI `e2e_policy`, hard gates, test
+authoring, UI catalogue/studio, and connections. Follow `ultraplan` first when
+the user said ultraplan.
+
 ## Host surfaces
 
 | Host | Where graphs live | How to invoke |
